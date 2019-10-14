@@ -1,0 +1,89 @@
+application {
+  config {
+    baseName leave
+    applicationType microservice
+    packageName ro.trc.leave
+    serviceDiscoveryType no
+    authenticationType oauth2
+    databaseType mongodb
+    cacheProvider no
+    enableHibernateCache false
+    buildTool gradle
+    serverPort 8086
+    languages [en, fr, ro]
+  }
+  entities *
+}
+
+
+/* LEAVE */
+
+enum LeaveStatus {
+	INITIAL, APPROVED, REJECTED
+}
+
+enum LeaveType {
+	CONCEDIU_ODIHNA, CONCEDIU_MEDICAL, CONCEDIU_PARENTAL
+}
+
+entity Request {
+  creationDate LocalDate,
+  description String,
+  endDate LocalDate,
+  startDate LocalDate,
+  status LeaveStatus,
+  type LeaveType,
+  workingDays Integer
+}
+
+entity Department {
+  manager String,
+  name String
+}
+
+entity Employee {
+  code String,
+  firstName String,
+  lastName String
+}
+entity Leave {
+  available Integer,
+  pending Integer,
+  total Integer
+}
+
+entity User {
+  deviceToken String,
+  email String,
+  photoUrl String,
+  userName String,
+}
+
+relationship OneToOne {
+  Employee{leave} to Leave
+  Employee{user} to User
+  
+}
+relationship OneToMany {
+  Leave{request} to Request
+  Employee{request} to Request
+  Department to Employee
+}
+
+
+dto * with mapstruct
+service * with serviceClass
+paginate * with pagination
+microservice * with organization
+
+/* DEPLOYMENT */
+deployment {
+  deploymentType kubernetes
+  appsFolders [leave]
+  dockerRepositoryName "razvansimiontrencadis"
+  serviceDiscoveryType no
+  istio true
+  kubernetesServiceType Ingress
+  kubernetesNamespace fortype
+  ingressDomain "35.238.17.44.nip.io"
+}
