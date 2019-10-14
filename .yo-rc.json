@@ -2,11 +2,11 @@
   "generator-jhipster": {
     "applicationType": "microservice",
     "gitCompany": "",
-    "baseName": "LeaveTest",
+    "baseName": "leave",
     "packageName": "ro.trc.leave",
     "packageFolder": "ro/trc/leave",
-    "serverPort": 8086,
-    "serviceDiscoveryType": "eureka",
+    "serverPort": "8086",
+    "serviceDiscoveryType": false,
     "authenticationType": "oauth2",
     "uaaBaseName": "../uaa",
     "cacheProvider": "no",
@@ -21,13 +21,13 @@
     "buildTool": "gradle",
     "useSass": true,
     "clientPackageManager": "npm",
-    "testFrameworks": [
-      "cucumber"
-    ],
+    "testFrameworks": [],
     "enableTranslation": true,
     "nativeLanguage": "en",
     "languages": [
-      "en"
+      "en",
+      "fr",
+      "ro"
     ],
     "clientFramework": "angularX",
     "jhiPrefix": "jhi",
@@ -42,5 +42,12 @@
   },
   "git-provider": "GitHub",
   "git-company": "smaidd",
-  "repository-name": "leave-test"
+  "repository-name": "leave-test",
+  "entities": [
+    "Request",
+    "Department",
+    "Employee",
+    "Leave",
+    "User"
+  ]
 }
